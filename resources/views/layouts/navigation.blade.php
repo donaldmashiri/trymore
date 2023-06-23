@@ -1,6 +1,8 @@
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-        @if (Auth::user()->hasRole('admin'))
+
+{{--        @if (Auth::user()->hasRole('admin'))--}}
+        @if (Auth::user()->role === 'admin')
             <li class="nav-item">
                 <a class="nav-link " href="{{ route('dashboard') }}">
                 <i class="bi bi-grid"></i>
@@ -35,17 +37,32 @@
                 <span>Users</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('criminals.index') }}">
+                    <i class="bi bi-person"></i>
+                    <span>Criminals</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('vehicles.index') }}">
+                    <i class="bi bi-list-check"></i>
+                    <span>Vehicles</span>
+                </a>
+            </li>
+
         @else
             <li class="nav-item">
-                <a class="nav-link collapsed" href="">
+                <a class="nav-link collapsed" href="{{ route('citizens.index') }}">
                     <i class="bi bi-house"></i>
-                    <span>Home</span>
+                    <span>Citizens</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="">
+                <a class="nav-link collapsed" href="{{ route('vehicles.create') }}">
                     <i class="bi bi-list-check"></i>
-                    <span>Orders</span>
+                    <span>Vehicles</span>
                 </a>
             </li>
         @endif

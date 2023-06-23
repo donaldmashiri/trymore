@@ -11,7 +11,7 @@ def fetch_images():
         host='localhost',
         user='root',
         password='',
-        database='face_att'
+        database='zrp'
     )
 
     cursor = cnx.cursor()
@@ -40,7 +40,7 @@ def checkin(employee_id):
         host='localhost',
         user='root',
         password='',
-        database='face_att'
+        database='zrp'
     )
 
     # Create a cursor object to execute SQL queries
@@ -57,7 +57,7 @@ def checkin(employee_id):
 
     # Check if the result is not None, meaning the employee_id is present and recorded today
     if result:
-        print("Employee attendance recorded today.")
+        print("Wanted person checked recorded today.")
     else:
         add_time(employee_id)
 
@@ -72,7 +72,7 @@ def add_time(employee_id):
         host='localhost',
         user='root',
         password='',
-        database='face_att'
+        database='zrp'
     )
 
     # Create a cursor object to execute SQL queries
@@ -94,13 +94,9 @@ def add_time(employee_id):
     cnx.close()
 
 
-# # Load the reference images and labels
-# reference_images = [
-#     ('images/known_faces/fatso.jpg', 'Faraimunashe'),
-#     ('images/known_faces/1685542663.jpg', 'Biden'),
-#     ('images/known_faces/putin.jpg', 'Putin')
-# ]
+# ...
 
+# Load the reference images and labels
 fetch_images()
 
 reference_encodings = []
@@ -108,12 +104,21 @@ labels = []
 
 for image_path, label in reference_images:
     reference_image = face_recognition.load_image_file(image_path)
-    reference_encoding = face_recognition.face_encodings(reference_image)[0]
+    # Check if any faces are detected in the reference image
+    reference_face_locations = face_recognition.face_locations(reference_image)
+    if len(reference_face_locations) == 0:
+        # Skip the image if no faces are detected
+        print(f"No faces detected in image: {image_path}")
+        continue
+
+    reference_encoding = face_recognition.face_encodings(reference_image, reference_face_locations)[0]
     reference_encodings.append(reference_encoding)
     labels.append(label)
 
 # Initialize the webcam or capture device
 cap = cv2.VideoCapture(0)
+
+# ...
 
 # Main loop
 while True:
@@ -126,6 +131,9 @@ while True:
     # Find all the faces and their encodings in the current frame
     face_locations = face_recognition.face_locations(rgb_frame)
     face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+
+    # Initialize face_detected flag
+    face_detected = False
 
     # Iterate over detected faces
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
@@ -141,11 +149,26 @@ while True:
                 print(f"Face recognized: {label}")
                 break
 
-        # Draw a rectangle around the face
-        cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
+        # Update face_detected flag
+        face_detected = True
 
-    # Display the frame
-    cv2.imshow('Face Login', frame)
+        # Draw a rectangle around the face
+        if matches:
+            # Green rectangle for recognized face
+            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
+            # Add label text
+            cv2.putText(frame, label, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+        else:
+            # Red rectangle for unrecognized face
+            cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
+
+    # Check if no face was detected
+    if not face_detected:
+        # Display the frame without any rectangles
+        cv2.imshow('Face Login', frame)
+    else:
+        # Display the frame with rectangles
+        cv2.imshow('Face Login', frame)
 
     # Exit loop on 'q' key press
     if cv2.waitKey(1) & 0xFF == ord('q'):

@@ -11,7 +11,7 @@ def fetch_images():
         host='localhost',
         user='root',
         password='',
-        database='face_att'
+        database='zrp'
     )
 
     cursor = cnx.cursor()
@@ -36,7 +36,7 @@ def checkout(employee_id):
         host='localhost',
         user='root',
         password='',
-        database='face_att'
+        database='zrp'
     )
 
     cursor = cnx.cursor()
@@ -62,7 +62,7 @@ def update_time(employee_id):
         host='localhost',
         user='root',
         password='',
-        database='face_att'
+        database='zrp'
     )
 
     cursor = cnx.cursor()
@@ -70,6 +70,7 @@ def update_time(employee_id):
     today = date.today()
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
+#     query = "UPDATE attendances SET time_out = %s WHERE employee_id = %s AND date = %s AND time_out IS NULL"
     query = "UPDATE attendances SET time_out = %s WHERE employee_id = %s AND date = %s AND time_out IS NULL"
     values = (current_time, employee_id, today)
     cursor.execute(query, values)

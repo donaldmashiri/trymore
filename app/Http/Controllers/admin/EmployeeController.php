@@ -23,7 +23,8 @@ class EmployeeController extends Controller
             'fname' => ['required', 'string'],
             'lname' => ['required', 'string'],
             'sex' => ['required', 'string'],
-            'natid' => ['required', 'regex:/^\d{2}-\d{7} [A-Z] \d{2}$/'],
+            'natid' => ['required', 'unique:employees'],
+//            'natid' => ['required', 'regex:/^\d{2}-\d{7} [A-Z] \d{2}$/'],
             'address' => ['required'],
             'file' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ]);
@@ -42,7 +43,7 @@ class EmployeeController extends Controller
             $employee->image = $imageName;
             $employee->save();
 
-            return redirect()->back()->with('success', 'Successfully added new employee.');
+            return redirect()->back()->with('success', 'Successfully updated wanted person');
         }catch(Exception $e){
             return redirect()->back()->with('error', 'Error: '.$e->getMessage());
         }
@@ -69,7 +70,7 @@ class EmployeeController extends Controller
             $employee->address = $request->address;
             $employee->save();
 
-            return redirect()->back()->with('success', 'Successfully updated employee.');
+            return redirect()->back()->with('success', 'Successfully updated wanted person.');
         }catch(Exception $e){
             return redirect()->back()->with('error', 'Error: '.$e->getMessage());
         }

@@ -9,12 +9,22 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if(Auth::user()->hasRole('admin'))
+
+        if(Auth::user()->role === ('admin'))
         {
             return redirect()->route('admin-dashboard');
-        }elseif(Auth::user()->hasRole('user'))
+        }else
         {
-            return redirect()->route('user-dashboard');
+            return view('citizens.index');
         }
+
+
+//        if(Auth::user()->hasRole('admin'))
+//        {
+//            return redirect()->route('admin-dashboard');
+//        }elseif(Auth::user()->hasRole('user'))
+//        {
+//            return redirect()->route('user-dashboard');
+//        }
     }
 }

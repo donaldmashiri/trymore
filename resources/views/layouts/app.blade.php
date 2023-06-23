@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>ZEDTC - Dashboard</title>
+    <title>ZRP - Dashboard</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -39,7 +39,7 @@
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
                 <h6>{{Auth::user()->name}}</h6>
-                <span>{{ Auth::user()->roles->first()->display_name }}</span>
+{{--                <span>{{ Auth::user()->roles->first()->display_name }}</span>--}}
               </li>
               <li>
                 <hr class="dropdown-divider">

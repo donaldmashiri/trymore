@@ -14,19 +14,19 @@
                                     <div class="col-lg-3 col-md-4 label ">
                                         <strong>Fullname:</strong>
                                     </div>
-                                    <div class="col-lg-9 col-md-8">Trymore</div>
+                                    <div class="col-lg-9 col-md-8">{{ Auth::user()->name }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">
                                         <strong>Email:</strong>
                                     </div>
-                                    <div class="col-lg-9 col-md-8">trymore@gmail.com</div>
+                                    <div class="col-lg-9 col-md-8">{{ Auth::user()->email }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">
                                         <strong>Department:</strong>
                                     </div>
-                                    <div class="col-lg-9 col-md-8">ZRP HOD</div>
+                                    <div class="col-lg-9 col-md-8">{{ Auth::user()->role }}</div>
                                 </div>
 
                             </div>

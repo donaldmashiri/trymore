@@ -42,11 +42,11 @@
                         </button>
                         <button type="button" class="btn btn-danger m-2" style="float: right;" data-bs-toggle="modal" data-bs-target="#basicModal2">
                             <i class="bi bi-box-arrow-left"></i>
-                            Check out
+                            Detect Face out
                         </button>
                         <button type="button" class="btn btn-success m-2" style="float: right;" data-bs-toggle="modal" data-bs-target="#basicModal1">
                             <i class="bi bi-box-arrow-in-right"></i>
-                            Check in
+                            Detect Face In
                         </button>
                       </div>
                       <table class="table table-hover">
@@ -56,8 +56,8 @@
                             <th scope="col">National ID</th>
                             <th scope="col">Fullname</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Time In</th>
-                            <th scope="col">Time Out</th>
+                            <th scope="col">Result after Detection</th>
+                            <th scope="col">Checking status</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -76,7 +76,12 @@
                                     <td>{{$emp->ecnum}}</td>
                                     <td>{{$emp->fname}} {{$emp->lname}}</td>
                                     <td>{{$att->date}}</td>
-                                    <td>{{$att->time_in}}</td>
+                                    <td>
+                                        {{$att->time_in}}
+                                    @if($att->time_in != null)
+                                        Detected.
+                                    @endif
+                                    </td>
                                     <td>{{$att->time_out}}</td>
                                 </tr>
                             @endforeach
@@ -94,7 +99,7 @@
             <form method="POST" action="{{route('admin-check-in')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Check In Recording</h5>
+                    <h5 class="modal-title">Detect Criminal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
